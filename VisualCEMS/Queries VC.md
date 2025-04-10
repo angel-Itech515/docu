@@ -1,4 +1,4 @@
-## Taules importants
+## INI
 ```SQL
 select * from tbtag;
 select * from tbparamgenerales;
@@ -6,6 +6,7 @@ select * from tbinstancia;
 select * from tbitemcsv;
 ```
 [[taula tbtag]]
+[[taula xt_configtags]]
 ## Dades interficie lectura i tags configuració
 ```SQL
 select t.name,x.* from t_tempi x left join tbtag t on idtag=id_parametro where name like '%%';
@@ -24,14 +25,19 @@ select * from xt_configtags where id_parametro in(select idtag from tbtag where 
 ## Dades taules year
 ```SQL
 SELECT t.name, z.*
-FROM z_2025_a z
+FROM z_2025_2 z
 LEFT JOIN tbtag t ON t.idtag = z.id_parametro
-WHERE t.name = 'NOX.IN';
+WHERE t.name = 'NOX.IN' order by dia desc limit 100000;
+
+SELECT t.name, y.*
+FROM y_2024 y
+LEFT JOIN tbtag t ON t.idtag = y.id_parametro
+WHERE t.name = 'NOX-30MIN-MCTV' AND caracter_validacion='VA';
 
 SELECT t.name, y.*
 FROM y_2025 y
 LEFT JOIN tbtag t ON t.idtag = y.id_parametro
-WHERE t.name = 'NOX.DPN' order by dia desc limit 10;
+WHERE t.name = 'NOX.DPN' order by dia desc limit 100000;
 
 SELECT *
 FROM y_2025 y
@@ -90,4 +96,37 @@ WHERE target.id_parametro = 24001807
   AND target.valor IS NULL;
 ```
 
-#
+# VAs anuals
+```SQL
+select * from xt_configtags where id_parametro in(select idtag from tbtag where name like '%%');
+select t.name,x.* from xt_configtags x left join tbtag t on idtag=id_parametro where name like 'NOX%VA%';
+
+SELECT t.name, y.*
+FROM y_2024 y
+LEFT JOIN tbtag t ON t.idtag = y.id_parametro
+WHERE t.name = 'NOX-30MIN-MCTV' AND caracter_validacion='VA';
+
+SELECT t.name, y.*
+FROM y_2024 y
+LEFT JOIN tbtag t ON t.idtag = y.id_parametro
+WHERE t.name = 'NOX-COQUE-30MIN-MCTV' AND caracter_validacion='VA';
+
+SELECT t.name, MAX(valor)
+FROM y_2024 y
+LEFT JOIN tbtag t ON t.idtag = y.id_parametro
+WHERE t.name = 'TOT-FA-CONT-COQUE';
+
+SELECT t.name, y.*
+FROM y_2024 y
+LEFT JOIN tbtag t ON t.idtag = y.id_parametro
+WHERE t.name = 'TOT-FA-CONT-COQUE' AND VALOR=9;
+-- 2024-08-26 19:30:00
+-- 2024-11-06 22:00:00
+
+SELECT t.name, y.*
+FROM y_2024 y
+LEFT JOIN tbtag t ON t.idtag = y.id_parametro
+WHERE t.name = 'NOX-COQUE-30MIN-MCTV' AND caracter_validacion='VA';
+
+select * from tbtag where name like 'tot-fa%';
+```

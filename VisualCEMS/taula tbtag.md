@@ -5,7 +5,15 @@ select * from tbtag where idtag = 2 OR idtag = 4;
 select * from tbtag where name like '%%';
 select idtag,name,iopath,iopathnet,selected,calculation,flow from tbtag where name like '%%';
 ```
-
+### Iopath per a les plantilles d'incorporació
+```SQL
+SELECT GROUP_CONCAT(name SEPARATOR ', ') AS tag_names, name, iopath, GROUP_CONCAT(idtag SEPARATOR ', ') AS idtags
+FROM tbtag
+WHERE iopath LIKE 'SSRSTAR03PI01%'
+AND selected = 1
+GROUP BY iopath
+ORDER BY iopath;
+```
 ### Columnes tbtag WHERE interface = 'DATOS'
 ```txt
 // *** TAGS de escritura + campo TYPE (Tipo de Datos)
