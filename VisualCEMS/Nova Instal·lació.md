@@ -4,7 +4,7 @@
 PATH programa generador de llicències: "C:\ITech515\Desarrollo\PlantValue\PlantValue Tools\PlantValue License Generator\bin\Debug\PV_License Generator.exe"
 Accedir Mode admin, x3 clics:
 ![[Pasted image 20250402114848.png]]
-Accedir com a Itech515 i ficar totes les parts de license info a infinit, sobretot establir les interfaces com toca i treure data, la ID Install s'ha de fer manual (exemple Nufri).
+Accedir com a Itech515 i ficar totes les parts de license info a infinit, sobretot establir les interfaces com toca i treure data, la ID Install s'ha de fer fent click a genera.
 ![[Pasted image 20250402114936.png]]
 ![[Pasted image 20250402115130.png]]
 ```SQL
@@ -22,7 +22,11 @@ Cal revisar:
 SELECT * FROM focos f;
 
 SELECT * FROM tbinstancia;
-SELECT * FROM tbitem
+UPDATE tbinstancia
+SET nombre = REPLACE(nombre, 'trarg', 'saica')
+WHERE nombre LIKE '%trarg%';
+
+SELECT * FROM tbitemcsv;
 ```
 
 

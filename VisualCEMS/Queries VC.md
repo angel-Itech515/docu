@@ -130,3 +130,37 @@ WHERE t.name = 'NOX-COQUE-30MIN-MCTV' AND caracter_validacion='VA';
 
 select * from tbtag where name like 'tot-fa%';
 ```
+
+# Problema alarmes
+
+Si apareixen logs d'aquest estil:
+```
+2025/05/09 20:33:59.3026;	Error generaSQLAlarma_CondicionHija(80524): Referencia a objeto no establecida como instancia de un objeto.
+2025/05/09 20:35:42.2377;	Error compruebaAlarmas_Condiciones(80524): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AS AdAT80524' at line 1 ####### SQL: SELECT  IF(IFNULL(SUM(ESTADO),0)=0,1,0) AS ESTADO, IFNULL(SUM(ESTADO),0) AS CANTIDAD, IF(IFNULL(SUM(ESTADO),0)=0,100,SUM(ESTADO)*100/0) AS PORCENTAJE  FROM () AS AdAT80524
+2025/05/09 21:00:32.3411;	Error generaSQLAlarma_CondicionHija(80492): Referencia a objeto no establecida como instancia de un objeto.
+2025/05/09 21:02:15.2490;	Error compruebaAlarmas_Condiciones(80492): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AS AdAT80492' at line 1 ####### SQL: SELECT  IF(IFNULL(SUM(ESTADO),0)>0,1,0) AS ESTADO, IFNULL(SUM(ESTADO),0) AS CANTIDAD, IF(IFNULL(SUM(ESTADO),0)>0,100,SUM(ESTADO)*100/0) AS PORCENTAJE  FROM () AS AdAT80492
+2025/05/09 21:02:15.2490;	Error generaSQLAlarma_CondicionHija(80516): Referencia a objeto no establecida como instancia de un objeto.
+2025/05/09 21:03:58.1695;	Error compruebaAlarmas_Condiciones(80516): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AS AdAT80516' at line 1 ####### SQL: SELECT  IF(IFNULL(SUM(ESTADO),0)>0,1,0) AS ESTADO, IFNULL(SUM(ESTADO),0) AS CANTIDAD, IF(IFNULL(SUM(ESTADO),0)>0,100,SUM(ESTADO)*100/0) AS PORCENTAJE  FROM () AS AdAT80516
+2025/05/09 21:03:58.1785;	Error generaSQLAlarma_CondicionHija(80524): Referencia a objeto no establecida como instancia de un objeto.
+2025/05/09 21:05:40.7202;	Error compruebaAlarmas_Condiciones(80524): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AS AdAT80524' at line 1 ####### SQL: SELECT  IF(IFNULL(SUM(ESTADO),0)=0,1,0) AS ESTADO, IFNULL(SUM(ESTADO),0) AS CANTIDAD, IF(IFNULL(SUM(ESTADO),0)=0,100,SUM(ESTADO)*100/0) AS PORCENTAJE  FROM () AS AdAT80524
+```
+Poden ser condicions orfes des del program usant ctrl+H.
+Les id que et marque solen estar dins la taula alarmas, més info en (extreta des del codi font del PV):
+```SQL
+SELECT 
+    `A`.*, 
+    `IA`.*, 
+    `IA`.`ID` AS IDREAL, 
+    `T`.`Rate`, 
+    `T`.`Selected`, 
+    `T`.Property1,
+    `T`.Property2,
+    `T`.Property3,
+    `T`.Property4
+FROM 
+    `alarmas` AS `A`
+    INNER JOIN `tbitemalarm` AS `IA` ON `A`.`itemAlarm` = `IA`.`idItem`
+    LEFT JOIN `tbtag` AS `T` ON `T`.`idtag` = `A`.`IdTagSalida`
+WHERE 
+    `A`.`IsAlarm` = 2;
+```

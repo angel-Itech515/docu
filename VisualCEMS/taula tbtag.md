@@ -14,6 +14,57 @@ AND selected = 1
 GROUP BY iopath
 ORDER BY iopath;
 ```
+### Insert de tags a partir d'altres
+```SQL
+-- INSERT INTO tbtag (
+    Type, Itype, Otype, Name, IdFoco, Interface, Description, MaxRange, MinRange, MaxRangeOut, MinRangeOut,
+    Units, Unitscustom, Conversion, MinIn, MaxIn, MinOut, MaxOut, CorrectionA, CorrectionB, Rate, RateSync,
+    IOPath, IOPathNet, ExcepValue, ExcepMaxTime, Compfactorvalue, CompMaxTime, PropWrite, PropRead, ValueWrite,
+    ValueRead, Selected, ValidationCode, Error, CreDate, CreUser, ModDate, ModUser, ReadingType, IdManual,
+    Historical, ValueDefault, FieldGap, Flow, OutPutTags, OverwriteRaw, Calculation, Property1, Property2,
+    Property3, Property4, Property5, Property6, Property7, Property8, Property9, Property10, MinValidRange,
+    MaxValidRange, Area, Decimals, Step, Alias
+)
+SELECT
+    Type, Itype, Otype,
+    REPLACE(Name, 'MCS100FT', 'FW101') AS Name,
+    IdFoco, Interface,
+    REPLACE(Description, 'MCS100FT', 'FW101') AS Description,
+    MaxRange, MinRange, MaxRangeOut, MinRangeOut, Units, Unitscustom, Conversion, MinIn, MaxIn,
+    MinOut, MaxOut, CorrectionA, CorrectionB, Rate, RateSync, IOPath, IOPathNet, ExcepValue,
+    ExcepMaxTime, Compfactorvalue, CompMaxTime, PropWrite, PropRead, ValueWrite, ValueRead,
+    Selected, ValidationCode, Error, CreDate, CreUser, ModDate, ModUser, ReadingType, IdManual,
+    Historical, ValueDefault, FieldGap, Flow, OutPutTags, OverwriteRaw, Calculation, Property1,
+    Property2, Property3, Property4, Property5, Property6, Property7, Property8, Property9,
+    Property10, MinValidRange, MaxValidRange, Area, Decimals, Step, Alias
+FROM tbtag
+WHERE Name IN ('MCS100FT_RED_MANT.IN', 'MCS100FT_RED_ERROR.IN');
+
+-- CAS 2
+-- INSERT INTO tbtag (
+    Type, Itype, Otype, Name, IdFoco, Interface, Description, MaxRange, MinRange, MaxRangeOut, MinRangeOut,
+    Units, Unitscustom, Conversion, MinIn, MaxIn, MinOut, MaxOut, CorrectionA, CorrectionB, Rate, RateSync,
+    IOPath, IOPathNet, ExcepValue, ExcepMaxTime, Compfactorvalue, CompMaxTime, PropWrite, PropRead, ValueWrite,
+    ValueRead, Selected, ValidationCode, Error, CreDate, CreUser, ModDate, ModUser, ReadingType, IdManual,
+    Historical, ValueDefault, FieldGap, Flow, OutPutTags, OverwriteRaw, Calculation, Property1, Property2,
+    Property3, Property4, Property5, Property6, Property7, Property8, Property9, Property10, MinValidRange,
+    MaxValidRange, Area, Decimals, Step, Alias
+)
+SELECT
+    Type, Itype, Otype,
+    'H2-ACTIVADO.IN' AS Name,
+    IdFoco, Interface,
+    'Alarma sistema detección de H2 activado' AS Description,
+    MaxRange, MinRange, MaxRangeOut, MinRangeOut, Units, Unitscustom, Conversion, MinIn, MaxIn,
+    MinOut, MaxOut, CorrectionA, CorrectionB, Rate, RateSync, IOPath, IOPathNet, ExcepValue,
+    ExcepMaxTime, Compfactorvalue, CompMaxTime, PropWrite, PropRead, ValueWrite, ValueRead,
+    Selected, ValidationCode, Error, CreDate, CreUser, ModDate, ModUser, ReadingType, IdManual,
+    Historical, ValueDefault, FieldGap, Flow, OutPutTags, OverwriteRaw, Calculation, Property1,
+    Property2, Property3, Property4, Property5, Property6, Property7, Property8, Property9,
+    Property10, MinValidRange, MaxValidRange, Area, Decimals, Step, Alias
+FROM tbtag
+WHERE Name IN ('D-Q-T-P-ERROR.IN');
+```
 ### Columnes tbtag WHERE interface = 'DATOS'
 ```txt
 // *** TAGS de escritura + campo TYPE (Tipo de Datos)
