@@ -123,8 +123,7 @@
               "title": "Restore i crea schema"
             }
           }
-        ],
-        "currentTab": 7
+        ]
       }
     ],
     "direction": "vertical"
@@ -271,8 +270,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "4d60afcaf8660331",
+  "active": "3080dee10092bd7b",
   "lastOpenFiles": [
+    "Administrar BBDD/Restore i crea schema.md",
     "VisualCEMS/taula tbtag.md",
     "VisualCEMS/taula xt_configtags.md",
     "VisualCEMS/Formateja Dades informes Excel a text.md",
@@ -282,7 +282,6 @@
     "IMGs/Pasted image 20250403165202.png",
     "IMGs",
     "VisualCEMS/Nova Instal·lació.md",
-    "Administrar BBDD/Restore i crea schema.md",
     "VisualCEMS/Modbus (WTF).md",
     "IMGs/Pasted image 20250402115130.png",
     "IMGs/Pasted image 20250402114936.png",
