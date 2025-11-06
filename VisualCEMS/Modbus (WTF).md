@@ -58,3 +58,6 @@ With the SHIFT ADDR = -1 , for instance,   IOPathNet=  1,3,0608,2   means Sla
 ## Vista con bits
 
 ![[Pasted image 20250403165202.png]]
+
+OUTPUT SIGNALS = true (default) //Permet l'enviament de tags de retorn, property1=W
+OUTPUT SIGNALS = false //Para l'enviament de tags de retorn, property1=W. No fa falta reiniciar la IF (en teoria)

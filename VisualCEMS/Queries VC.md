@@ -1,6 +1,6 @@
 ## INI
 ```SQL
-select * from tbtag;
+select * from tbtag where name like '%%';
 select * from tbparamgenerales;
 select * from tbinstancia;
 select * from tbitemcsv;
@@ -10,7 +10,7 @@ select * from tbitemcsv;
 ## Dades interficie lectura i tags configuració
 ```SQL
 select t.name,x.* from t_tempi x left join tbtag t on idtag=id_parametro where name like '%%';
-select t.name,t.interface,x.* from t_tempi x left join tbtag t on idtag=id_parametro;
+select t.name,t.interface,x.* from t_tempi x left join tbtag t on idtag=id_parametro where name like '%%';
 
 select t.name,x.* from t_temp x left join tbtag t on idtag=id_parametro where name like '%%' order by dia desc limit 10;
 select t.name,t.interface,x.* from t_temp x left join tbtag t on idtag=id_parametro order by dia desc limit 10;
@@ -24,24 +24,40 @@ select * from xt_configtags where id_parametro in(select idtag from tbtag where 
 ```
 ## Dades taules year
 ```SQL
-SELECT t.name, z.*
-FROM z_2025_2 z
-LEFT JOIN tbtag t ON t.idtag = z.id_parametro
-WHERE t.name = 'NOX.IN' order by dia desc limit 100000;
+SELECT * FROM xt_histexttables x;  
+SELECT * FROM xt_historicaltables x;
 
-SELECT t.name, y.*
-FROM y_2024 y
-LEFT JOIN tbtag t ON t.idtag = y.id_parametro
-WHERE t.name = 'NOX-30MIN-MCTV' AND caracter_validacion='VA';
+SELECT t.name, z.*
+FROM z_2025_8 z
+LEFT JOIN tbtag t ON t.idtag = z.id_parametro
+WHERE t.name = 'NOX-AN1.IN' order by dia desc limit 1000;
 
 SELECT t.name, y.*
 FROM y_2025 y
 LEFT JOIN tbtag t ON t.idtag = y.id_parametro
-WHERE t.name = 'NOX.DPN' order by dia desc limit 100000;
+WHERE t.name = 'NOX.DPN' order by dia desc limit 1000;
+
+
+SELECT t.name, y.*
+FROM y_2025 y
+LEFT JOIN tbtag t ON t.idtag = y.id_parametro
+WHERE t.name like '%%' order by dia desc limit 1000;
+
 
 SELECT *
 FROM y_2025 y
-WHERE id_parametro=(select idtag from tbtag where name = 'STAT1.SRC') and dia > '2025-02-14 10:51:00' and dia < '2025-02-19 07:39:00';
+WHERE id_parametro=(select idtag from tbtag where name = 'NOX.DPN') 
+and dia > '2025-02-14 10:51:00'
+and dia < '2025-02-19 07:39:00'
+order by dia desc limit 1000;
+
+-- UPDATE
+UPDATE z_2025_9 AS z  
+LEFT JOIN tbtag AS t ON z.id_parametro = t.idtag  
+SET z.valor = 2  
+WHERE z.dia >= '2025-10-25 16:26:00'  
+  AND z.dia <= '2025-10-27 06:00:00'  
+  AND t.name LIKE 'FOCO-DECOKING.IN';
 ```
 ## Inserts de dades
 ```SQL
@@ -72,7 +88,7 @@ SET valor = -1
 WHERE dia > '2025-01-14 14:30:00'
   AND dia < '2025-01-15 13:05:00'
   AND id_parametro = 2
-  AND valor_corregido = 4;
+  AND valor_corregido = 4; 
 ```
 ## UPDATE valors i CV a partir d'un altre contaminant si esta a null, cas ciments molins
 ```SQL
@@ -112,7 +128,7 @@ LEFT JOIN tbtag t ON t.idtag = y.id_parametro
 WHERE t.name = 'NOX-COQUE-30MIN-MCTV' AND caracter_validacion='VA';
 
 SELECT t.name, MAX(valor)
-FROM y_2024 y
+FROM y_2025 y
 LEFT JOIN tbtag t ON t.idtag = y.id_parametro
 WHERE t.name = 'TOT-FA-CONT-COQUE';
 
@@ -124,9 +140,9 @@ WHERE t.name = 'TOT-FA-CONT-COQUE' AND VALOR=9;
 -- 2024-11-06 22:00:00
 
 SELECT t.name, y.*
-FROM y_2024 y
+FROM z_2025_5 y
 LEFT JOIN tbtag t ON t.idtag = y.id_parametro
-WHERE t.name = 'NOX-COQUE-30MIN-MCTV' AND caracter_validacion='VA';
+WHERE t.name = 'PST-AN1-STATUS.IN';
 
 select * from tbtag where name like 'tot-fa%';
 ```
@@ -144,8 +160,8 @@ Si apareixen logs d'aquest estil:
 2025/05/09 21:03:58.1785;	Error generaSQLAlarma_CondicionHija(80524): Referencia a objeto no establecida como instancia de un objeto.
 2025/05/09 21:05:40.7202;	Error compruebaAlarmas_Condiciones(80524): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ') AS AdAT80524' at line 1 ####### SQL: SELECT  IF(IFNULL(SUM(ESTADO),0)=0,1,0) AS ESTADO, IFNULL(SUM(ESTADO),0) AS CANTIDAD, IF(IFNULL(SUM(ESTADO),0)=0,100,SUM(ESTADO)*100/0) AS PORCENTAJE  FROM () AS AdAT80524
 ```
-Poden ser condicions orfes des del program usant ctrl+H.
-Les id que et marque solen estar dins la taula alarmas, més info en (extreta des del codi font del PV):
+Poden ser condicions orfes **des del program usant ctrl+H**.
+Les id que et marquen solen estar dins la taula alarmas, més info en (extreta des del codi font del PV):
 ```SQL
 SELECT 
     `A`.*, 

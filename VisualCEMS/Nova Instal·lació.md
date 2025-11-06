@@ -27,8 +27,21 @@ SET nombre = REPLACE(nombre, 'trarg', 'saica')
 WHERE nombre LIKE '%trarg%';
 
 SELECT * FROM tbitemcsv;
+UPDATE tbitemcsv
+SET
+  dirTemp = REPLACE(
+    dirTemp,
+    'D:\\FICHEROS\\Ficheros_FTP\\LOCAL\\COVESTRO\\',
+    'C:\\Itech515_Data\\LOCAL\\'
+  ),
+  dirDef = REPLACE(
+    dirDef,
+    'D:\\FICHEROS\\Ficheros_FTP\\FTP1\\COVESTRO\\',
+    'C:\\Itech515_Data\\FTP\\'
+  )
+WHERE dirTemp LIKE '%COVESTRO%'
+   OR dirDef LIKE '%COVESTRO%';
 ```
-
 
 ## Arregla tbparamgenerales
 
@@ -44,3 +57,16 @@ insert into tbparamgenerales values('RecalculationDate_Current', '2100-01-01 00:
 ```sql
 ALTER TABLE $pv22_bd.bits_controli ADD COLUMN color VARCHAR(50) AFTER ValueSubstitution;
 ```
+
+# INFORME-ANUAL, retorno no tiene tipo correcto
+
+Si comenecen a fallar els Logs de les anuals per culpa de nulls a RETORNO:
+```sql
+update y_2025 y
+set valor=0, valor_corregido=0
+WHERE id_parametro in(select idtag from tbtag where name like '%-INFORME-ANUAL-%') and valor is null;
+
+select * from y_2025
+WHERE id_parametro in(select idtag from tbtag where name like '%-INFORME-ANUAL-%') and valor is null;
+```
+

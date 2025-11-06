@@ -7,9 +7,10 @@ select idtag,name,iopath,iopathnet,selected,calculation,flow from tbtag where na
 ```
 ### Iopath per a les plantilles d'incorporació
 ```SQL
-SELECT GROUP_CONCAT(name SEPARATOR ', ') AS tag_names, name, iopath, GROUP_CONCAT(idtag SEPARATOR ', ') AS idtags
+SELECT GROUP_CONCAT(name SEPARATOR ', ') AS tag_names, name, iopath, GROUP_CONCAT(idtag SEPARATOR ',') AS idtags
 FROM tbtag
-WHERE iopath LIKE 'SSRSTAR03PI01%'
+WHERE iopath LIKE '%'
+AND interface='DATOS'
 AND selected = 1
 GROUP BY iopath
 ORDER BY iopath;
