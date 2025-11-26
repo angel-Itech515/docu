@@ -26,12 +26,16 @@ C:\xampp\mysql\bin\mysql -u pvuser -pPV99013939 emisiones < "C:\Users\Itech515\D
 ```
 # Restore i backup PlantValue (usant tool pròpia)
 ```
+# Les dues tools estàn ubicades dins:
+"C:\ITech515\Core\PlantValue - Backup\PV_Backup.exe"
+"C:\ITech515\Core\PlantValue - Backup\PV_Restore.exe"
 
-"D:\ITech515\Core\PlantValue - Backup\PV_Backup.exe"
-"D:\ITech515\Core\PlantValue - Backup\PV_Restore.exe"
 
-PV_Restore.exe "C:\PVBACKUP\RESTORE\SIRUSA" /database=rt19_sirusa_linea1 /histables=yes /setall=yes /structure=yes
+# Script complert per al Restore
 
-"D:\ITech515\Core\PlantValue - Backup\PV_Restore.exe" "D:\Itech515_Data SSD\Backups\full\pv22_ursa_f21" /database=pv22_ursa_f21 /histables=yes /setall=yes /structure=yes
+"C:\Itech515\Core\PlantValue - Backup\PV_Restore.exe" "C:\Itech515_Data\Backups\full\rt19_sirusa_linea1" /database=rt19_sirusa_linea1 /structure=yes /histables=yes /setall=yes /create=yes  
+  
+# Script complert per al Backup
+
 ```
 

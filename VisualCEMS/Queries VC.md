@@ -19,7 +19,7 @@ SELECT *
 FROM y_2025 y
 ORDER BY dia DESC limit 1;
 
-select t.name,x.* from xt_configtags x left join tbtag t on idtag=id_parametro where name like '%%';
+select t.name,x.* from xt_configtags x left join tbtag t on idtag=id_parametro where name like '%.REF%';
 select * from xt_configtags where id_parametro in(select idtag from tbtag where name like '%%');
 ```
 ## Dades taules year
@@ -90,26 +90,29 @@ WHERE dia > '2025-01-14 14:30:00'
   AND id_parametro = 2
   AND valor_corregido = 4; 
 ```
-## UPDATE valors i CV a partir d'un altre contaminant si esta a null, cas ciments molins
+## UPDATE valors
 ```SQL
-SELECT target.dia, target.id_parametro, target.valor, target.valor_corregido, target.caracter_validacion,
-       source.caracter_validacion AS nuevo_caracter_validacion
-FROM Y_2025 AS target
-JOIN Y_2025 AS source
-    ON target.dia = source.dia
-    AND source.id_parametro = 24001349
-WHERE target.id_parametro = 24001807
-  AND target.valor = 0;
+SELECT *
+FROM z_2025_a
+WHERE id_parametro = (
+    SELECT idtag
+    FROM tbtag
+    WHERE name = 'MCS100FT_PRAL_MANT.IN'
+)
+AND dia > '2025-11-17 13:10:00'
+AND dia < '2025-11-18 09:30:40'
+AND valor_corregido=1;
 
--- UPDATE Y_2025 AS target
-JOIN Y_2025 AS source
-    ON target.dia = source.dia
-    AND source.id_parametro = 24001349
-SET target.valor = 0,
-    target.valor_corregido = 0,
-    target.caracter_validacion = source.caracter_validacion
-WHERE target.id_parametro = 24001807
-  AND target.valor IS NULL;
+UPDATE z_2025_a
+SET valor = 1013
+WHERE id_parametro = (
+    SELECT idtag
+    FROM tbtag
+    WHERE name = 'MCS100FT_PRAL_MANT.IN'
+)
+AND dia > '2025-11-17 13:10:00'
+AND dia < '2025-11-18 09:30:40'
+AND valor_corregido=1;
 ```
 
 # VAs anuals

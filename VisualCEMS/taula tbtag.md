@@ -11,6 +11,17 @@ SELECT GROUP_CONCAT(name SEPARATOR ', ') AS tag_names, name, iopath, GROUP_CONCA
 FROM tbtag
 WHERE iopath LIKE '%'
 AND interface='DATOS'
+AND property1<>'w'
+AND selected = 1
+GROUP BY iopath
+ORDER BY iopath;
+
+-- Query que coincideix amb el server2
+SELECT iopath,name, GROUP_CONCAT(idtag SEPARATOR ',') AS idtags
+FROM tbtag
+WHERE iopath LIKE '%'
+AND interface='DATOS'
+AND property1<>'w'
 AND selected = 1
 GROUP BY iopath
 ORDER BY iopath;
