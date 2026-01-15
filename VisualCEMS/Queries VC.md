@@ -183,3 +183,9 @@ FROM
 WHERE 
     `A`.`IsAlarm` = 2;
 ```
+
+# Id manual IT20
+
+```SQL
+select name,idmanual from tbtag where idmanual<>0;
+```
